@@ -1,0 +1,11 @@
+1.Remove the large file from Git tracking
+
+# If the file is in your working directory
+git rm --cached path/to/large-file.ext
+
+# If you want to keep the file locally but remove from Git
+git rm --cached --path/to/large-file.ext
+echo "large-file.ext" >> .gitignore
+
+
+2.Commit the changes
