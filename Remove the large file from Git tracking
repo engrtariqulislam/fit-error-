@@ -9,3 +9,25 @@ echo "large-file.ext" >> .gitignore
 
 
 2.Commit the changes
+
+
+
+# ১. গিট হিস্ট্রি থেকে ওই বড় ফাইলটি সম্পূর্ণ মুছে ফেলা
+git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch frontend/.next/cache/webpack/server-production/0.pack" \
+  --prune-empty --tag-name-filter cat -- --all
+
+# ২. .gitignore ফাইলে প্রয়োজনীয় ফোল্ডার যোগ করা (যাতে ভবিষ্যতে এমন না হয়)
+echo ".next/" >> .gitignore
+echo "node_modules/" >> .gitignore
+echo ".env*" >> .gitignore
+
+# ৩. পরিবর্তনগুলো সেভ করা
+git add .gitignore
+git commit -m "chore: remove large files from history and update gitignore"
+
+# ৪. লোকাল গিট ক্লিন আপ করা
+git gc --prune=now
+
+# ৫. সবশেষে গিটহাবে জোরপূর্বক (Force Push) পাঠানো
+git push origin master --force
